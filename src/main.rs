@@ -1,9 +1,43 @@
-/*--------------------------------------------------------------------------------------------------------------
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
- *-------------------------------------------------------------------------------------------------------------*/
+use yew::{html, Callback, ClickEvent, Component, ComponentLink, Html, ShouldRender};
+
+struct App {
+    clicked: bool,
+    onclick: Callback<ClickEvent>,
+}
+
+enum Msg {
+    Click,
+}
+
+impl Component for App {
+    type Message = Msg;
+    type Properties = ();
+
+    fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
+        App {
+            clicked: false,
+            onclick: link.callback(|_| Msg::Click),
+        }
+    }
+
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match msg {
+            Msg::Click => {
+                self.clicked = true;
+                true // Indicate that the Component should re-render
+            }
+        }
+    }
+
+    fn view(&self) -> Html {
+        let button_text = if self.clicked { "Clicked!" } else { "Click me!" };
+
+        html! {
+            <button onclick=&self.onclick>{ button_text }</button>
+        }
+    }
+}
 
 fn main() {
-    let name = "VS Code Remote - Containers";
-    println!("Hello, {}!", name);
+    yew::start_app::<App>();
 }
