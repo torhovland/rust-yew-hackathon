@@ -30,6 +30,9 @@ RUN apt-get update \
     && rustup update \
     && rustup component add rls rust-analysis rust-src rustfmt clippy \
     #
+    # Install wasm-pack
+    && curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh \
+    #
     # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
     && groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
