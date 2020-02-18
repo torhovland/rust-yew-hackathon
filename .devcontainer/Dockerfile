@@ -21,7 +21,7 @@ RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
     #
     # Verify git, needed tools installed
-    && apt-get -y install git iproute2 procps lsb-release \
+    && apt-get -y install git iproute2 procps lsb-release nodejs \
     #
     # Install lldb, vadimcn.vscode-lldb VSCode extension dependencies
     && apt-get install -y lldb python3-minimal libpython3.7 \
@@ -45,6 +45,9 @@ RUN apt-get update \
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
+
+# Install npm
+RUN curl -L https://npmjs.org/install.sh | sudo sh
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
