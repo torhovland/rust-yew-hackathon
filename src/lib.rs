@@ -1,5 +1,10 @@
+#![recursion_limit="256"]
+#[macro_use]
+
+extern crate log;
+extern crate web_logger;
+
 use wasm_bindgen::prelude::*;
-use web_sys::console;
 use app::App;
 
 mod app;
@@ -21,9 +26,7 @@ pub fn main_js() -> Result<(), JsValue> {
     #[cfg(debug_assertions)]
     console_error_panic_hook::set_once();
 
-
-    // Your code goes here!
-    console::log_1(&JsValue::from_str("Hello worlds!"));
+    web_logger::init();    
 
     yew::start_app::<App>();
 
