@@ -1,35 +1,32 @@
+use adminpage::AdminPage;
+use frontpage::FrontPage;
 use yew::prelude::*;
 use yew_router::{prelude::*, Switch};
-use frontpage::FrontPage;
-use adminpage::AdminPage;
 
-mod frontpage;
 mod adminpage;
+mod frontpage;
 
-pub struct App {
-}
+pub struct App {}
 
 #[derive(Debug, Switch, Clone)]
 pub enum AppRoute {
-    #[to = "/"]
-    FrontPage,
     #[to = "/admin"]
     AdminPage,
+    #[to = "/"]
+    FrontPage,
 }
 
-pub enum AppMsg {
-}
+pub enum AppMsg {}
 
-impl Component for App { 
+impl Component for App {
     type Message = AppMsg;
     type Properties = ();
 
-    fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
-        App {
-        }
+    fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
+        App {}
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _: Self::Message) -> ShouldRender {
         false
     }
 

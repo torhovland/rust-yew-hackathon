@@ -1,12 +1,12 @@
+use super::AppRoute;
 use yew::prelude::*;
 use yew_router::prelude::*;
-use super::AppRoute;
 
 pub struct FrontPage {
+    link: ComponentLink<Self>,
     clicked: bool,
     width: String,
     height: String,
-    link: ComponentLink<Self>,
 }
 
 pub enum FrontPageMsg {
@@ -15,7 +15,7 @@ pub enum FrontPageMsg {
     HeightChange(String),
 }
 
-impl Component for FrontPage { 
+impl Component for FrontPage {
     type Message = FrontPageMsg;
     type Properties = ();
 
@@ -50,10 +50,18 @@ impl Component for FrontPage {
 
     fn view(&self) -> Html {
         let on_click = self.link.callback(|_| FrontPageMsg::Click);
-        let on_width_change = self.link.callback(|e: InputData| FrontPageMsg::WidthChange(e.value));
-        let on_height_change = self.link.callback(|e: InputData| FrontPageMsg::HeightChange(e.value));
+        let on_width_change = self
+            .link
+            .callback(|e: InputData| FrontPageMsg::WidthChange(e.value));
+        let on_height_change = self
+            .link
+            .callback(|e: InputData| FrontPageMsg::HeightChange(e.value));
 
-        let button_text = if self.clicked { "Clicked!" } else { "Click me!" };
+        let button_text = if self.clicked {
+            "Clicked!"
+        } else {
+            "Click me!"
+        };
         let url = format!("https://loremflickr.com/{}/{}", self.width, self.height);
 
         html! {
@@ -63,9 +71,9 @@ impl Component for FrontPage {
                 <button onclick=on_click>{ button_text }</button>
                 <br />
 
-                <label>{ format!("Choose width: {}", self.width) }</label>
+                <label>{ format!("Choose widths: {}", self.width) }</label>
                 <br />
-                <input type="range" min="10" max="640" value=&self.width class="slider" id="widthRange" oninput=on_width_change />                
+                <input type="range" min="10" max="640" value=&self.width class="slider" id="widthRange" oninput=on_width_change />
                 <br />
                 <label>{ format!("Choose height: {}", self.height) }</label>
                 <br />
